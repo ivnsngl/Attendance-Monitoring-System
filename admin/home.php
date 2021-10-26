@@ -167,29 +167,6 @@ try {
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
-              <p>
-                Employees
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/examples/invoice.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>List of Employees</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/examples/profile.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Profile</p>
-                </a>
-              </li>
-            </ul>
-          </li>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
@@ -229,7 +206,7 @@ try {
 
                 <p>On Time Percentage</p>
               </div>
-              <div class="icon">
+              <div class="icon">  
                 <i class="ion ion-stats-bars"></i>
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
@@ -272,7 +249,7 @@ try {
               <div class="inner">
                 <h3>0</h3>
 
-                <p>Total Employee</p>
+                <p>Absent Today</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-stalker"></i>

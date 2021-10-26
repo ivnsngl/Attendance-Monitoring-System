@@ -152,29 +152,6 @@ try {
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
-              <p>
-                Employees
-              <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="../examples/invoice.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>List of Employees</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../examples/profile.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Profile</p>
-                </a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -221,7 +198,6 @@ try {
                     <th>Name</th>
                     <th>Time In</th>
                     <th>Time Out</th>
-                    <th>Actions</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -231,20 +207,12 @@ try {
                     <td>Ivan Justine Sangel</td>
                     <td>8:00 AM <small class="badge badge-success"><i class="far fa-clock"></i> On Time</td>
                     <td>9:00 AM <small class=""></td>
-                    <td>
-                      <button class="btn btn-success btn-xs"><i class="fas fa-edit"></i> Edit</button>
-                      <button class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i> Delete</button>
-                    </td>
                     <tr>
                     <td>Oct 5, 2021</td>
                     <td>ABCD1234</td>
                     <td>Mark Resty Tabon</td>
                     <td>10:00 AM <small class="badge badge-danger"><i class="far fa-clock"></i> Late</td>
                     <td>4:00 PM <small class=""></td>
-                    <td>
-                      <button class="btn btn-success btn-xs"><i class="fas fa-edit"></i> Edit</button>
-                      <button class="btn btn-danger btn-xs"><i class="far fa-trash-alt"></i> Delete</button>
-                    </td>
                   <tfoot>
                     <tr>
                       <th>Date</th>
@@ -252,7 +220,6 @@ try {
                       <th>Name</th>
                       <th>Time In</th>
                       <th>Time Out</th>
-                      <th>Actions</th>
                     </tr>
                     </tfoot>
                 </table>
