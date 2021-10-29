@@ -1,15 +1,16 @@
 <?php
 include("admin/includes/functions.php");
-ini_set('display_errors', 1);
+ini_set('display_errors', 0); // Hide errors
 date_default_timezone_set('Asia/Manila');
 $time = date("h:i:s");
+$time2 = date("h:i A");
 $today = date("D - F d, Y");
 $date = date("Y-m-d");
 $in = date("H:i:s");
 $out = "12:00:00";
 
 if(isset($_POST['attendance'])) {
-  $_SESSION['expire'] =  date("H:i:s", time() + 1);
+  $_SESSION['expire'] = date("H:i:s", time() + 1);
   $operation = $_POST['operation'];
   if ($operation == 'time-in') {
     $employee_id = $_POST['employee_id'];
@@ -46,7 +47,7 @@ if(isset($_POST['attendance'])) {
         VALUES ('$employee_id', '$fullname', '$date', '$in', '$out', '$total')";
         $result3 = mysqli_query($db, $query3);
         $_SESSION['status'] = "<div id='time' class='alert alert-success' role='alert'>
-          Time in: $fullname
+          Time in: $time2
         </div>";
         header('location: index.php');
       } else {
@@ -85,10 +86,10 @@ if(isset($_POST['attendance'])) {
         $total = $total - 1;
       }
 
-      $query3 = "UPDATE attendance SET time_out = '$in', total_hour = '$total' WHERE employee_id = '$employee_id' AND attendance_date = '$date'";
+      $query3 = "UPDATE attendance SET time_out = '$in', total_hour = '$total' WHERE emp_id = '$employee_id' AND attendance_date = '$date'";
       $result2 = mysqli_query($db, $query3);
       $_SESSION['status'] = "<div id='time' class='alert alert-success' role='alert'>
-        Timed out
+        Time out: $time2
       </div>";
       header("Location: index.php");
     }
