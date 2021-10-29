@@ -214,10 +214,15 @@ try {
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
+            <?php
+            $query2 = "SELECT count(*) As 'Ontime' FROM attendance, employees, schedule WHERE attendance.time_in <= schedule.schedule_in AND attendance.emp_id = employees.employee_id AND schedule.schedule_id = employees.schedule_id AND attendance.attendance_date = CURDATE()";
+            $result2 = mysqli_query($db, $query2);
+            $row2 = mysqli_fetch_array($result2);
+            ?>
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>0</h3>
+                <h3><?php echo $row2['Ontime'];?></h3>
 
                 <p>On Time Today</p>
               </div>
@@ -229,10 +234,15 @@ try {
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
+            <?php
+            $query3 = "SELECT count(*) As 'Late' FROM attendance, employees, schedule WHERE attendance.time_in > schedule.schedule_in AND attendance.emp_id = employees.employee_id AND schedule.schedule_id = employees.schedule_id AND attendance.attendance_date = CURDATE()";
+            $result3 = mysqli_query($db, $query3);
+            $row3 = mysqli_fetch_array($result3);
+            ?>
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>0</h3>
+                <h3><?php echo $row3['Late']; ?></h3>
 
                 <p>Late Today</p>
               </div>

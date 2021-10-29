@@ -19,6 +19,16 @@ try {
   exit();
 }
 
+try {
+  $query2 = "SELECT * FROM attendance";
+  $result2 = mysqli_query($db, $query2);
+} catch (Exception $e) {
+  echo "Error " . $e->getMessage();
+  exit();
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -201,18 +211,39 @@ try {
                   </tr>
                   </thead>
                   <tbody>
+                  <?php
+                  $query3 = "SELECT * FROM attendance, employees, schedule WHERE attendance.emp_id = employees.employee_id AND employees.schedule_id = schedule.schedule_id";
+                  $result3 = mysqli_query($db, $query3);
+                  while ($row = mysqli_fetch_array($result3)) {
+                    if ($row['time_in'] <= $row['schedule_in']) {
+                  ?>
                   <tr>
-                    <td>Oct 5, 2021</td>
-                    <td>ABCD1234</td>
-                    <td>Ivan Justine Sangel</td>
-                    <td>8:00 AM <small class="badge badge-success"><i class="far fa-clock"></i> On Time</td>
-                    <td>9:00 AM <small class=""></td>
-                    <tr>
-                    <td>Oct 5, 2021</td>
-                    <td>ABCD1234</td>
-                    <td>Mark Resty Tabon</td>
-                    <td>10:00 AM <small class="badge badge-danger"><i class="far fa-clock"></i> Late</td>
-                    <td>4:00 PM <small class=""></td>
+                    <td><?php echo $row['attendance_date']; ?></td>
+                    <td><?php echo $row['emp_id']; ?></td>
+                    <td><?php echo $row['employee_name']; ?></td>
+                    <td><?php $timein = $row['time_in']; 
+                              echo date('h:i A', strtotime($timein));?><span class="float-right badge bg-danger">On Time</span></td>
+                    <td><?php $timeout = $row['time_out']; 
+                              echo date('h:i A', strtotime($timeout));?></td>
+                  </tr>
+                  <?php
+                    } else {
+                  ?>
+                  <tr>
+                    <td><?php echo $row['attendance_date']; ?></td>
+                    <td><?php echo $row['emp_id']; ?></td>
+                    <td><?php echo $row['employee_name']; ?></td>
+                    <td><?php $timein = $row['time_in']; 
+                              echo date('h:i A', strtotime($timein));?><span class="float-right badge bg-danger">Late</span></td>
+                    <td><?php $timeout = $row['time_out']; 
+                              echo date('h:i A', strtotime($timeout));  ?></td>
+                  </tr>
+                  <?php
+                    }
+                  }
+                  ?>
+                  
+          
                   <tfoot>
                     <tr>
                       <th>Date</th>

@@ -1,7 +1,6 @@
 <?php
 include("admin/includes/functions.php");
-ini_set('display_errors', 0);
-ini_set('display_errors', false);
+ini_set('display_errors', 1);
 date_default_timezone_set('Asia/Manila');
 $time = date("h:i:s");
 $today = date("D - F d, Y");
@@ -17,15 +16,84 @@ if(isset($_POST['attendance'])) {
     $query = "SELECT * FROM employees WHERE employee_id = '$employee_id'";
     $result = mysqli_query($db, $query);
 
-    if (!$row = mysqli_fetch_array($result)) {
+    if (!$row = $result->fetch_assoc()) {
       $_SESSION['status'] = "<div id='time' class='alert alert-danger' role='alert'>
         Employee id does not exist
       </div>";
       header('location: index.php');
-    }  
+    } else {
+      $query2 = "SELECT * FROM attendance WHERE emp_id = '$employee_id' AND attendance_date = '$date'";
+      $result2 = mysqli_query($db, $query2);
+
+      if (!$row2 = $result2->fetch_assoc()) {
+        $firstname = $row['firstname'];
+        $lastname = $row['lastname'];
+        $fullname = $lastname . ', ' . $firstname;
+        
+        // Compute total hour
+        $first = new DateTime($in);
+        $second = new DateTime($out);
+        $interval = $first->diff($second);
+        $hrs = $interval->format('%h');
+        $mins = $interval->format('%i');
+        $mins = $mins/60;
+        $total = $hrs + $mins;
+        if($total > 4) {
+          $total = $total - 1;
+        }
+
+        $query3 = "INSERT INTO attendance (emp_id, employee_name, attendance_date, time_in, time_out, total_hour)
+        VALUES ('$employee_id', '$fullname', '$date', '$in', '$out', '$total')";
+        $result3 = mysqli_query($db, $query3);
+        $_SESSION['status'] = "<div id='time' class='alert alert-success' role='alert'>
+          Time in: $fullname
+        </div>";
+        header('location: index.php');
+      } else {
+        $_SESSION['status'] = "<div id='time' class='alert alert-warning' role='alert'>
+          You already have timed in
+        </div>";
+        header("Location: index.php");
+      }
+    }
+  }
+
+  if ($operation == 'time-out') {
+    $employee_id = $_POST['employee_id'];
+    $query = "SELECT * FROM attendance WHERE emp_id = '$employee_id' AND attendance_date = '$date'";
+    $result = mysqli_query($db, $query);
+
+    if (!$row = $result->fetch_assoc()) {
+      $_SESSION['status'] = "<div id='time' class='alert alert-danger' role='alert'>
+        You did not timed in
+      </div>";
+      header('location: index.php');
+    } else {
+      $query2 = "SELECT * FROM attendance WHERE emp_id = '$employee_id' AND attendance_date = '$date'";
+      $queryres = mysqli_query($db, $query2);
+      while ($rowres = mysqli_fetch_array($queryres)) {
+        $timein = $row['time_in'];
+      }
+      $first = new DateTime($timein);
+      $second = new DateTime($in);
+      $interval = $first->diff($second);
+      $hrs = $interval->format('%h');
+      $mins = $interval->format('%i');
+      $mins = $mins/60;
+      $total = $hrs + $mins;
+      if ($total > 4) {
+        $total = $total - 1;
+      }
+
+      $query3 = "UPDATE attendance SET time_out = '$in', total_hour = '$total' WHERE employee_id = '$employee_id' AND attendance_date = '$date'";
+      $result2 = mysqli_query($db, $query3);
+      $_SESSION['status'] = "<div id='time' class='alert alert-success' role='alert'>
+        Timed out
+      </div>";
+      header("Location: index.php");
+    }
   }
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -103,7 +171,9 @@ if(isset($_POST['attendance'])) {
     if($dd == $_SESSION['expire']) {
       session_unset();
     }
+    
   ?>
+  
 </div>
 
 <br><br>
